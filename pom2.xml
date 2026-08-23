@@ -1,0 +1,66 @@
+pom.xml>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>1</groupId>
+  <artifactId>CalculatorProject</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>CalculatorProject</name>
+	  <properties>
+	    <!-- Compile using JDK 26, but produce bytecode for Java 24 -->
+	    <maven.compiler.release>24</maven.compiler.release>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	
+	    <!-- Enable auto‑provisioning of the scanner's JRE -->
+	    <sonar.scanner.skipJreProvisioning>false</sonar.scanner.skipJreProvisioning>
+	
+	    <!-- Optional: explicitly tell Sonar where sources and binaries are -->
+	    <sonar.sources>src/main/java</sonar.sources>
+	    <sonar.java.binaries>target/classes</sonar.java.binaries>
+	</properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>5.7.0.6970</version>
+            </plugin>
+        <!-- for testing -->
+			<plugin>
+			    <groupId>org.jacoco</groupId>
+			    <artifactId>jacoco-maven-plugin</artifactId>
+			    <version>0.8.12</version>
+			    <executions>
+			        <execution>
+			            <id>prepare-agent</id>
+			            <goals>
+			                <goal>prepare-agent</goal>
+			            </goals>
+			        </execution>
+			        <execution>
+			            <id>report</id>
+			            <phase>verify</phase>
+			            <goals>
+			                <goal>report</goal>
+			            </goals>
+			        </execution>
+			    </executions>
+			</plugin>
+			<!-- Maven Surefire (test runner) – already included in default super POM, but you can add: -->
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-surefire-plugin</artifactId>
+			    <version>3.2.5</version>
+			</plugin>
+        </plugins>
+    </build>
+    <dependencies>
+		<!-- for JUnit 5 Testing -->
+		<dependency>
+		    <groupId>org.junit.jupiter</groupId>
+		    <artifactId>junit-jupiter</artifactId>
+		    <version>5.10.2</version>
+		    <scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
+ 
