@@ -59,8 +59,20 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: http://localhost:9000
         run: |
-          mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-            -Dsonar.projectKey=CalculatorProject \
+      - name: Build, test and generate coverage
+        run: mvn clean verify
+
+      - name: SonarQube Cloud analysis
+        run: |
+          mvn sonar:sonar \
+            -Dsonar.organization=pr2309 \
+            -Dsonar.projectKey=PR2309_Calulator_JavaMavenEclipseProject \
             -Dsonar.projectName=CalculatorProject \
-            -Dsonar.host.url=http://localhost:9000 \
             -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+
+            
+#          mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+#            -Dsonar.projectKey=CalculatorProject \
+#            -Dsonar.projectName=CalculatorProject \
+#            -Dsonar.host.url=http://localhost:9000 \
+#            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
