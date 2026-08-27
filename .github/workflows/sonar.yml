@@ -82,11 +82,13 @@ jobs:
             -Dsonar.organization=pr2309 \
             -Dsonar.projectKey=PR2309_Calulator_JavaMavenEclipseProject \
             -Dsonar.projectName=CalculatorProject \
+            -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.token=${{ secrets.SONAR_TOKEN }}
-
+#            - X
             
 #          mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
 #            -Dsonar.projectKey=CalculatorProject \
 #            -Dsonar.projectName=CalculatorProject \
 #            -Dsonar.host.url=http://localhost:9000 \
 #            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+#            -X
