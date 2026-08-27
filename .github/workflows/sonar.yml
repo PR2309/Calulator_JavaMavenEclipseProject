@@ -6,8 +6,16 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
+# GitHub Actions workflow for:
+# 1. Building the Maven Java project
+# 2. Running JUnit tests
+# 3. Generating JaCoCo code coverage
+# 4. Sending the analysis to SonarQube Cloud
 name: Java CI with Maven + SonarQube
 
+# Run the workflow when:
+# - Code is pushed to the main branch
+# - A pull request is created/updated for the main branch
 on:
   push:
     branches: [ "main" ]
@@ -36,32 +44,38 @@ on:
 
 jobs:
   build-and-sonar:
-    runs-on: self-hosted
+    # GitHub provides a temporary Ubuntu machine for this job
+    # runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
+      # Download the repository code into the Ubuntu runner
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
+          # Required for SonarQube to properly analyze Git history
           fetch-depth: 0
 
+      # Install/configure Java 17
       - name: Set up Java 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
+          # Cache Maven dependencies to make future builds faster
           cache: maven
 
+      # Build the project, run JUnit tests, and generate the JaCoCo coverage report
       - name: Build and run tests
         run: mvn clean verify
 
-      - name: SonarQube analysis
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: http://localhost:9000
-        run: |
-      - name: Build, test and generate coverage
-        run: mvn clean verify
-
+      # Run SonarQube Cloud analysis
+      #
+      # The SONAR_TOKEN is stored securely in:
+      # GitHub → Settings → Secrets and variables → Actions
+      #
+      # Secret name:
+      # SONAR_TOKEN
       - name: SonarQube Cloud analysis
         run: |
           mvn sonar:sonar \
